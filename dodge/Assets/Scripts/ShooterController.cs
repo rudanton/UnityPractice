@@ -11,7 +11,7 @@ public class ShooterController : MonoBehaviour
     void Start()
     {
         magazine = new Queue<GameObject>();
-        for(int i = 0 ; i<50 ; i++)
+        for(int i = 0 ; i<15 ; i++)
         {
             GameObject go = Instantiate(bullet);
             go.transform.position = transform.position + Vector3.up;
