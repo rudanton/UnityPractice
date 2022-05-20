@@ -25,7 +25,11 @@ public class PlayerController : MonoBehaviour
         rg.velocity = new Vector3(h, 0, v)  * vConst;
     }
     private void OnTriggerEnter(Collider other) {
-        if(other.gameObject.GetComponent<BulletMove>()  !=null){
+        // if(other.gameObject.GetComponent<BulletMove>()  !=null){
+        //     other.gameObject.SetActive(false);
+        //     StartCoroutine(flash());
+        // }
+        if(other.gameObject.CompareTag("bullet")){
             other.gameObject.SetActive(false);
             StartCoroutine(flash());
         }

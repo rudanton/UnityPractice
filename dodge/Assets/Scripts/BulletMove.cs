@@ -13,6 +13,8 @@ public class BulletMove : MonoBehaviour
     }  
     private void OnEnable() {
         initVec = transform.position;
+        vel = aim.transform.position - transform.position;
+        vel = vel.normalized;
         StartCoroutine(Deactivator());
     }
     private void OnTriggerEnter(Collider other) {
@@ -25,8 +27,7 @@ public class BulletMove : MonoBehaviour
         transform.position += vel * Time.deltaTime * 4;
     }
     IEnumerator Deactivator(){
-        vel = aim.transform.position - transform.position;
-        vel = vel.normalized;
+        
         yield return new WaitForSeconds(15f);
         transform.position = initVec;
         gameObject.SetActive(false);
