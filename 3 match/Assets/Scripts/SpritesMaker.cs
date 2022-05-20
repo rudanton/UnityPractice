@@ -2,22 +2,59 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+enum KIND
+{
+    DEER,
+    CAT,
+    DOG, MOUSE,
+    PIG,
+    PANDA,
+    RABBIT,
+    DUCK,
+    BEAR,
+    NONE,
+}
 public class SpritesMaker : MonoBehaviour
 {
+    public const int width = 9;
+    public const int height = 16;
+    public const int size = 64;
+    public const int padding = 16;
+
     public List<GameObject> sprites;
-    int[,] positions;
+    Node[,] positions;
     // Start is called before the first frame update
-    private void Awake() {
-        positions = new int[9, 16];
-        for(int i = 0 ; i<9; i++)
+    private void Awake()
+    {
+        positions = new Node[width, height];
+        for (int x = 0; x < width; x++)
         {
-            for(int j = 0; j<16; j++){
-                int index = Random.Range(0,9);
+            for (int y = 0; y < height; y++)
+            {
+                int index = Random.Range(0, 9);
+                positions[x, y] = new Node(index, new Point(x, y));
+
                 GameObject go = Instantiate(sprites[index], gameObject.transform);
-                RectTransform  rt = go.GetComponent<RectTransform>();
-                rt.anchoredPosition = new Vector3(16+32 + i*64, -16-32 - j*64,0);
+                RectTransform rt = go.GetComponent<RectTransform>();
+                rt.anchoredPosition = new Vector3(
+                    padding * 3 + x * size,
+                    -padding * 3 - y * size,
+                     0);
+
             }
         }
     }
 }
+[System.Serializable]
+public class Node
+{
+    public int value;
+    public Point index;
+
+    public Node(int v, Point i)
+    {
+        value = v;
+        index = i;
+    }
+}
+
