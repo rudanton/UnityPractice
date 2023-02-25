@@ -23,6 +23,7 @@ public class SpritesMaker : MonoBehaviour
 
     public List<GameObject> sprites;
     Node[,] positions;
+     
     // Start is called before the first frame update
     private void Awake()
     {
@@ -33,16 +34,16 @@ public class SpritesMaker : MonoBehaviour
             {
                 int index = Random.Range(0, 9);
                 positions[x, y] = new Node(index, new Point(x, y));
-
                 GameObject go = Instantiate(sprites[index], gameObject.transform);
                 RectTransform rt = go.GetComponent<RectTransform>();
                 rt.anchoredPosition = new Vector3(
                     padding * 3 + x * size,
                     -padding * 3 - y * size,
                      0);
-
+                go.GetComponent<Match3>().SetMatch3(positions[x, y]);
             }
         }
+        
     }
 }
 [System.Serializable]

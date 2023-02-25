@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
     [Serializable]
-public class Point
+public struct Point
 {
     public int x;
     public int y;
@@ -13,7 +13,7 @@ public class Point
         x = nx;
         y = ny;
     }
-    public void mult(int m){
+    public void Mult(int m){
         x *= m;
         y *= m;
     }
@@ -21,25 +21,25 @@ public class Point
         x+=a.x;
         y+=a.y;
     }
-    public Vector2 toVector2(){
+    public Vector2 ToVector2(){
         return new Vector2(x, y);
     }
-    public bool isEqual(Point p){
+    public bool IsEqual(Point p){
         return (x==p.x && y == p.y);
     }
-    public static Point fromVector(Vector2 v){
+    public static Point FromVector(Vector2 v){
         return new Point((int)v.x, (int)v.y);
     }
-    public static Point fromVector(Vector3 v){
+    public static Point FromVector(Vector3 v){
         return new Point((int)v.x, (int)v.y);
     }
-    public static Point mult(Point p , int m){
+    public static Point Mult(Point p , int m){
         return new Point(p.x*m, p.y*m);
     }
-    public static Point add(Point p , Point a){
+    public static Point Add(Point p , Point a){
         return new Point(p.x + a.x, p.y + a.y);
     }
-    public static Point clone(Point p){
+    public static Point Clone(Point p){
         return new Point(p.x, p.y);
     }
 
