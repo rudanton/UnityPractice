@@ -30,6 +30,6 @@ public class Match3 : MonoBehaviour
         position = node;
     }
     void CheckClick(PointerEventData data){
-        GameManager.Instance.SetNode(position);
+        GameManager.Instance.SetNode(position, gameObject);
     }
 }
