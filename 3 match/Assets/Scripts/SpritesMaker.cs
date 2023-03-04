@@ -59,3 +59,8 @@ public class Node
     }
 }
 
+
+public static class Vaiable
+{
+    public static int size = 64;
+}

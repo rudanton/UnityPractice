@@ -6,11 +6,19 @@ using UnityEngine.UI;
 
 public class Match3 : MonoBehaviour
 {
-    GameObject clicking;
-    Node position;
-    EventTrigger eventTrigger;
-    Toggle toggle;
-    
+    #region Variable
+    private EventTrigger eventTrigger;
+    private Toggle toggle;
+
+    public Node position { get; private set; }
+    public GameObject myGameObject => gameObject;
+
+    private WaitForSeconds _deltaT = new WaitForSeconds(0.02f);
+    private RectTransform _rect;
+
+    #endregion
+
+    #region UnityMethod
     // Start is called before the first frame update
     void Start()
     {
@@ -23,13 +31,50 @@ public class Match3 : MonoBehaviour
         toggle = GetComponent<Toggle>();
         toggle.group = GetComponentInParent<ToggleGroup>();
         toggle.graphic = transform.GetChild(0).GetComponent<Image>();
-    }
 
-    public void SetMatch3(Node node){
+        _rect = GetComponent<RectTransform>();
+    }
+    #endregion
+
+    #region PublicMethod
+    public void SetMatch3(Node node)
+    {
         //생성시 데이터 초기화.
         position = node;
     }
-    void CheckClick(PointerEventData data){
-        GameManager.Instance.SetNode(position, gameObject);
+    public void SetPoint(Point point)
+    {
+        var goal = point;
+        goal.Sub(position.index);
+
+        var goalVec = _rect.anchoredPosition + new Vector2(goal.x, -goal.y)*Vaiable.size;
+       
+        StartCoroutine(MoveCoroutine(goalVec));
+        position.index = point;
+
     }
+    #endregion
+
+    #region PrivateMethod
+    private void CheckClick(PointerEventData data)
+    {
+        GameManager.Instance.SetNode(position, this);
+    }
+    #endregion
+    #region Coroutine
+
+    private IEnumerator MoveCoroutine(Vector2 goal)
+    {
+        float time = 0;
+        var start = _rect.anchoredPosition;
+        while (time < 1)
+        {
+            _rect.anchoredPosition = Vector2.Lerp(start, goal, time);
+            time += 0.02f;
+            yield return _deltaT;
+        }
+        _rect.anchoredPosition = goal;
+
+    }
+    #endregion
 }
